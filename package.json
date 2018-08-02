@@ -1,0 +1,24 @@
+{
+    "name": "egg-proxy",
+    "version": "1.0.0",
+    "description": "koa proxy middleware for eggjs framework",
+    "license": "MIT",
+    "main": "index.js",
+    "scripts": {},
+    "devDependencies": {
+        "express": "^4.12.4",
+        "istanbul-harmony": "^0.3.12",
+        "koa": "^0.21.0",
+        "mocha": "^2.2.5",
+        "should": "^6.0.3",
+        "sinon": "^1.14.1",
+        "superagent": "^1.2.0"
+    },
+    "dependencies": {
+        "co-body": "^2.0.0",
+        "formidable": "^1.0.17",
+        "request": "^2.56.0",
+        "thunkify": "^2.1.2",
+        "underscore": "^1.8.3"
+    }
+}
