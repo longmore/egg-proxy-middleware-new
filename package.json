@@ -1,6 +1,6 @@
 {
-    "name": "@ac/egg-proxy",
-    "version": "1.0.3",
+    "name": "@ac/egg-proxy-middleware",
+    "version": "1.0.0",
     "description": "koa proxy middleware for eggjs framework",
     "license": "MIT",
     "main": "index.js",
@@ -12,15 +12,6 @@
         "url": "git@git.corp.kuaishou.com:acfun-frontend/modules/egg-proxy.git"
     },
     "author": "zhangrongmou",
-    "devDependencies": {
-        "express": "^4.12.4",
-        "istanbul-harmony": "^0.3.12",
-        "koa": "^0.21.0",
-        "mocha": "^2.2.5",
-        "should": "^6.0.3",
-        "sinon": "^1.14.1",
-        "superagent": "^1.2.0"
-    },
     "dependencies": {
         "co-body": "^2.0.0",
         "formidable": "^1.0.17",
