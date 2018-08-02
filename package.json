@@ -5,6 +5,11 @@
     "license": "MIT",
     "main": "index.js",
     "scripts": {},
+    "pub": "npm version patch && npm publish && git push --follow-tags",
+    "repository": {
+        "type": "git",
+        "url": "git@git.corp.kuaishou.com:acfun-frontend/modules/egg-proxy.git"
+    },
     "devDependencies": {
         "express": "^4.12.4",
         "istanbul-harmony": "^0.3.12",
