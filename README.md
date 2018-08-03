@@ -37,34 +37,9 @@ module.exports = require('@ac/egg-proxy-middleware');
 
 ```
 
-### Validate Request Body
-
-```js
-// {app_root}/app/controller/home.js
-exports.index = function*() {
-  this.validate({ id: 'id' }); // will throw if invalid
-  // or
-  const errors = this.validator.validate({ id: 'id' }, this.request.body);
-};
-```
-
-### Extend Rules
-
-- app.js
-
-```js
-app.validator.addRule('jsonString', (rule, value) => {
-  try {
-    JSON.parse(value);
-  } catch (err) {
-    return 'must be json string';
-  }
-});
-```
-
 ## Questions & Suggestions
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+Please open an issue [here](http://git.corp.kuaishou.com/acfun-frontend/modules/egg-proxy-middleware/issues).
 
 ## License
 
