@@ -1,6 +1,6 @@
 {
     "name": "@ac/egg-proxy-middleware",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "koa proxy middleware for eggjs framework",
     "license": "MIT",
     "main": "index.js",
