@@ -2,6 +2,9 @@
 
 proxy plugin for egg.
 
+## Can I do for you
+This is a plugin for egg. Help you to redriect request from browser to other server api wher CORS.
+
 ## Install
 
 ```bash
@@ -25,6 +28,8 @@ exports.eggProxy = {
             proxy_pass: 'http://m.acfun.cn', // target origin
         }
     ],
+    body_parse: true,
+    proxy_timeout: 3000,
     gzip: true // default value is true
 };
 ```
@@ -36,6 +41,15 @@ exports.eggProxy = {
 module.exports = require('@ac/egg-proxy-middleware');
 
 ```
+
+## Support
+
+framework: koa2
+
+request method: get/post/put/delete
+
+request data format: url/form/multipart
+
 
 ## Questions & Suggestions
 
