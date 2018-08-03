@@ -15,8 +15,7 @@
     "dependencies": {
         "co-body": "^2.0.0",
         "formidable": "^1.0.17",
-        "request": "^2.56.0",
-        "thunkify": "^2.1.2",
-        "underscore": "^1.8.3"
+        "lodash": "^4.17.10",
+        "request": "^2.56.0"
     }
 }

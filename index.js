@@ -1,22 +1,22 @@
 /*
  * @Author: zhangrongmou
  * @Date: 2018-08-02 22:04:19
- * @Last Modified by:   zhangrongmou
- * @Last Modified time: 2018-08-02 22:04:19
+ * @Last Modified by: zhangrongmou
+ * @Last Modified time: 2018-08-03 14:50:51
  */
 
-var util = require('util');
-var request = require('request');
-var _ = require('underscore');
-var utils = require('./utils/utils.js');
+const util = require('util');
+const request = require('request');
+const _ = require('lodash');
+const utils = require('./utils/utils.js');
 
-module.exports = function (options) {
+module.exports = (options) => {
     options = _.defaults(options || {}, {
         body_parse: true,
-        keep_query_string: true,
         proxy_timeout: 3000,
         proxy_methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        proxy_rules: []
+        rules: [],
+        gzip: true
     });
 
     return async (ctx, next) => {
@@ -39,31 +39,27 @@ module.exports = function (options) {
         opts = utils.configRequestOptions(ctx, options);
 
         const res = await requestWrap(opts);
-        ctx.body = res;
+
+        let result = res.body;
+        // 如果是json数据, 则解析为对象
+        if (/json/i.test(res.headers['content-type'])) {
+            ctx.body = JSON.parse(result);
+        }
+
+        ['content-type', 'set-cookie'].forEach(header => {
+            res.headers[header] && ctx.set(header, res.headers[header]);
+        });
 
     };
 };
 
 function requestWrap(opt) {
     return new Promise((resolve, reject) => {
-        opt.gzip = true;
         request(opt, (error, response) => {
             let status = response && response.statusCode;
-
             // success
             if (!error && +status === 200) {
-                try {
-                    let result = response.body;
-
-                    // 如果是json数据, 则解析为对象
-                    if (/json/i.test(response.headers['content-type'])) {
-                        result = JSON.parse(result);
-                    }
-                    resolve(result);
-                }
-                catch (e) {
-                    reject();
-                }
+                resolve(response);
             } else {
                 reject();
             }
