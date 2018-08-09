@@ -2,7 +2,7 @@
  * @Author: zhangrongmou
  * @Date: 2018-08-02 22:04:19
  * @Last Modified by: zhangrongmou
- * @Last Modified time: 2018-08-03 15:06:07
+ * @Last Modified time: 2018-08-09 17:19:48
  */
 
 const util = require('util');
@@ -37,17 +37,18 @@ module.exports = (options) => {
         }
 
         opts = utils.configRequestOptions(ctx, options);
+        await requestWrap(opts).then(res => {
+            let result = res.body;
+            // 如果是json数据, 则解析为对象
+            if (/json/i.test(res.headers['content-type'])) {
+                ctx.body = JSON.parse(result);
+            }
 
-        const res = await requestWrap(opts);
-
-        let result = res.body;
-        // 如果是json数据, 则解析为对象
-        if (/json/i.test(res.headers['content-type'])) {
-            ctx.body = JSON.parse(result);
-        }
-
-        ['content-type', 'set-cookie'].forEach(header => {
-            res.headers[header] && ctx.set(header, res.headers[header]);
+            ['content-type', 'set-cookie'].forEach(header => {
+                res.headers[header] && ctx.set(header, res.headers[header]);
+            });
+        }).catch(err => {
+            ctx.body = err;
         });
 
     };
@@ -61,7 +62,10 @@ function requestWrap(opt) {
             if (!error && +status === 200) {
                 resolve(response);
             } else {
-                reject();
+                reject({
+                    result: status,
+                    msg: '登陆服务出错!'
+                });
             }
 
         })
