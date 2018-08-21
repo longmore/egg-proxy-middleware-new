@@ -2,19 +2,30 @@
  * @Author: zhangrongmou
  * @Date: 2018-08-02 22:04:19
  * @Last Modified by: zhangrongmou
- * @Last Modified time: 2018-08-09 17:19:48
+ * @Last Modified time: 2018-08-21 20:23:21
  */
 
 const util = require('util');
+const querystring = require('querystring');
 const request = require('request');
 const _ = require('lodash');
 const utils = require('./utils/utils.js');
+
+const colors = require('colors');
+colors.setTheme({
+    input: 'grey',
+    verbose: 'cyan',
+    prompt: 'red',
+    info: 'green',
+    data: 'blue'
+});
 
 module.exports = (options) => {
     options = _.defaults(options || {}, {
         body_parse: true,
         proxy_timeout: 3000,
         proxy_methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        host: false,
         rules: [],
         gzip: true
     });
@@ -37,6 +48,9 @@ module.exports = (options) => {
         }
 
         opts = utils.configRequestOptions(ctx, options);
+        if (!opts.host) {
+            delete opts.headers.host;
+        }
         await requestWrap(opts).then(res => {
             let result = res.body;
             // 如果是json数据, 则解析为对象
@@ -56,18 +70,25 @@ module.exports = (options) => {
 
 function requestWrap(opt) {
     return new Promise((resolve, reject) => {
+        let fullUrl = opt.url;
+        if (querystring.stringify(opt.qs)) {
+            fullUrl += '?' + querystring.stringify(opt.qs);
+        }
         request(opt, (error, response) => {
             let status = response && response.statusCode;
             // success
             if (!error && +status === 200) {
+                console.log(`[proxy] ${fullUrl}`.green);
+                console.log(response.body);
                 resolve(response);
             } else {
+                console.log(`[proxy] ${fullUrl}`.red);
+                console.log(response.body);
                 reject({
                     result: status,
-                    msg: '登陆服务出错!'
+                    msg: '服务请求出错!'
                 });
             }
-
         })
     });
 }
