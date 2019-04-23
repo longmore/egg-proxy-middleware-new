@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@git.corp.kuaishou.com:acfun-frontend/modules/egg-proxy.git"
+        "url": ""
     },
     "author": "zhangrongmou",
     "dependencies": {
